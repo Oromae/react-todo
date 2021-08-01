@@ -26,9 +26,13 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
   };
 
   const destroyer = (i) => {
-    const remainingTasks = list.filter(
-      (task) => filtered[i].todoList !== task.todoList
-    );
+    const remainingTasks = list.filter((task, e) => {
+      if (test === "All") {
+        return i !== e;
+      } else {
+        return filtered[i].todoList !== task.todoList;
+      }
+    });
     setList(remainingTasks);
   };
 
@@ -87,7 +91,7 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
                 onChange={() => toggleTodo(i)}
                 className="toggle"
                 type="checkbox"
-                defaultChecked={item.isCompleted}
+                checked={item.isCompleted}
               />
 
               {editTodo === i ? (
