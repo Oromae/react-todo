@@ -23,11 +23,13 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
     let todo = todoList[i];
     todoList[i] = { ...todo, ...isComp };
     setList(todoList);
-    console.log(filtered);
   };
 
   const destroyer = (i) => {
-    setList(filtered.filter((e, el) => el !== i));
+    const remainingTasks = list.filter(
+      (task) => filtered[i].todoList !== task.todoList
+    );
+    setList(remainingTasks);
   };
 
   const onBlur = (e, i) => {
@@ -44,9 +46,7 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
   };
 
   function onClear() {
-    const filterCompleted = filtered.filter(
-      (item) => item.isCompleted !== true
-    );
+    const filterCompleted = list.filter((item) => item.isCompleted !== true);
     setList(filterCompleted);
   }
   function onClickFilter(i) {
@@ -87,7 +87,7 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
                 onChange={() => toggleTodo(i)}
                 className="toggle"
                 type="checkbox"
-                defaultChecked={item.isCompleted ? true : false}
+                defaultChecked={item.isCompleted}
               />
 
               {editTodo === i ? (
