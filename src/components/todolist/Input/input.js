@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const initialListValue = { todoList: "", isCompleted: "" };
+const initialListValue = { todoList: "", isCompleted: false };
 
 function Input({ setList, list }) {
   const [input, setInput] = useState(initialListValue);

@@ -8,14 +8,14 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
     if (test === "All") {
       return true;
     } else if (test === "Active") {
-      return item.isCompleted === "";
+      return item.isCompleted === false;
     } else if (test === "Completed") {
-      return item.isCompleted === "completed";
+      return item.isCompleted === true;
     }
   });
 
   const toggleTodo = (i) => {
-    updateTodo({ isCompleted: filtered[i].isCompleted ? "" : "completed" }, i);
+    updateTodo({ isCompleted: filtered[i].isCompleted ? false : true }, i);
   };
 
   const updateTodo = (isComp, i) => {
@@ -23,10 +23,11 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
     let todo = todoList[i];
     todoList[i] = { ...todo, ...isComp };
     setList(todoList);
+    console.log(filtered);
   };
 
   const destroyer = (i) => {
-    setList(filtered.filter((e, el) => el != i));
+    setList(filtered.filter((e, el) => el !== i));
   };
 
   const onBlur = (e, i) => {
@@ -44,7 +45,7 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
 
   function onClear() {
     const filterCompleted = filtered.filter(
-      (item) => item.isCompleted != "completed"
+      (item) => item.isCompleted !== true
     );
     setList(filterCompleted);
   }
@@ -69,7 +70,7 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
 
   const defaultFilter = () => {
     filters.map((item) => {
-      if (item.className != "") {
+      if (item.className !== "") {
         setFilters((item.className = ""));
       }
     });
@@ -79,13 +80,14 @@ function List({ setList, list, setFilters, filters, todoCounter }) {
     <div>
       <ul className="todo-list">
         {filtered.map((item, i) => (
-          <li key={i} className={item.isCompleted}>
+          <li key={i} className={item.isCompleted ? "completed" : ""}>
             <div className="view">
               <input
                 key={i}
                 onChange={() => toggleTodo(i)}
                 className="toggle"
                 type="checkbox"
+                defaultChecked={item.isCompleted ? true : false}
               />
 
               {editTodo === i ? (

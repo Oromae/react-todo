@@ -4,9 +4,9 @@ import Input from "./Input/input";
 import Footer from "./footer";
 
 const initialList = [
-  { todoList: "Learn JavaScript", isCompleted: "completed" },
-  { todoList: "Learn React", isCompleted: "" },
-  { todoList: "Have a life!", isCompleted: "" },
+  { todoList: "Learn JavaScript", isCompleted: true },
+  { todoList: "Learn React", isCompleted: false },
+  { todoList: "Have a life!", isCompleted: false },
 ];
 
 const initialFilters = [
@@ -16,7 +16,7 @@ const initialFilters = [
 ];
 
 const todoCounter = (item) => {
-  return item.filter((e) => e.isCompleted === "").length;
+  return item.filter((e) => e.isCompleted === false).length;
 };
 function Todo() {
   const [list, setList] = useState(
